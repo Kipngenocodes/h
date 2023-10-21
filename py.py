@@ -28,6 +28,7 @@ window.title("Work Assignment")
 age_label = tk.Label(window, text="Enter Age:")
 age_label.pack()
 
+# having age entry widget
 age_entry = tk.Entry(window)
 age_entry.pack()
 
