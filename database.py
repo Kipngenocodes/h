@@ -71,6 +71,18 @@ def query_fun():
     myresult = mycursor.fetchall()
     print(myresult)
 
+    # create variable print_myresult ad equate it to an empty string
+    print_myresult=" "
+
+    # creation of a for loop to loop the query
+    for results in myresult[0]:
+        print_myresult += str(results) +"\n"
+
+
+    # creatiom of a query label
+
+    query_label =Label(root, text=print_myresult, font=12)
+    query_label.grid(row=8, column=0, columnspan=2)
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
