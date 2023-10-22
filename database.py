@@ -66,8 +66,10 @@ def query_fun():
     mycursor = connexion.cursor()
 
     mycursor.execute("SELECT *,oid FROM adresses")
+    # allows fetching from the database
     myresult = mycursor.fetchall()
     print(myresult)
+
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
