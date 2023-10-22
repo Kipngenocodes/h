@@ -75,7 +75,8 @@ def query_fun():
     print_myresult=" "
 
     # creation of a for loop to loop the query
-    for results in myresult[0]:
+    # elimate so we the index of [0] allow printing of everythhing
+    for results in myresult:
         print_myresult += str(results) +"\n"
 
 
