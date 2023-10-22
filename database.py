@@ -11,6 +11,11 @@ root.geometry("500x500")
 
 # creating tables in database
 '''
+# create a database or connect to existing one.
+    connexion = mydatabsemanager.connect("MyadressBook.db")
+
+    # creation of cursor which allows us to send command to database  to do something.
+    mycursor = connexion.cursor()
 mycursor.execute(""" CREATE TABLE adresses (
     First_name text,
     Second_name text,
@@ -19,7 +24,11 @@ mycursor.execute(""" CREATE TABLE adresses (
     state text,
     zip_code integer
 )
+    #creation of a commit to changes we are making to a database.
+    connexion.commit()
 
+    # closing the  connection upon completing using the database.
+    connexion.close()
 """)
 '''
 
@@ -79,7 +88,8 @@ def query_fun():
     # elimate so we the index of [0] allow printing of everythhing
     for results in myresult:
         # manipulation of tuples to get different results
-        print_myresult += str(results) +"\n"
+        # Quering database to give only last name and City by reference of their index:
+        print_myresult += str(results[1]) + "  " +str(results[3]) + "\n"
 
 
     # creatiom of a query label
