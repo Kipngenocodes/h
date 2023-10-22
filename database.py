@@ -69,7 +69,8 @@ def query_fun():
     mycursor.execute("SELECT *,oid FROM adresses")
     # allows fetching from the database
     myresult = mycursor.fetchall()
-    print(myresult)
+    # Getting rid of the print results to allow manipulation of the python tuple
+    # print(myresult)
 
     # create variable print_myresult ad equate it to an empty string
     print_myresult=" "
@@ -77,6 +78,7 @@ def query_fun():
     # creation of a for loop to loop the query
     # elimate so we the index of [0] allow printing of everythhing
     for results in myresult:
+        # manipulation of tuples to get different results
         print_myresult += str(results) +"\n"
 
 
