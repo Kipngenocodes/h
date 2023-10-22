@@ -49,7 +49,8 @@ def submit_fun():
     connexion.close()
 
 
-    # clear text boxes upon completing entering data
+    # clear text boxes upon completing entering data to allow
+    # entering of the other data value  which are upcoming.
     f_name.delete(0, END)
     l_name.delete(0, END)
     address.delete(0, END)
