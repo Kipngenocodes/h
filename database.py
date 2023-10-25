@@ -68,40 +68,6 @@ def submit_fun():
 
 
 # creation of a query_fun
-def query_fun():
-    # create a database or connect to existing one.
-    connexion = mydatabsemanager.connect("MyadressBook.db")
-
-    # creation of cursor which allows us to send command to database  to do something.
-    mycursor = connexion.cursor()
-
-    mycursor.execute("SELECT *,oid FROM adresses")
-    # allows fetching from the database
-    myresult = mycursor.fetchall()
-    # Getting rid of the print results to allow manipulation of the python tuple
-    # print(myresult)
-
-    # create variable print_myresult ad equate it to an empty string
-    print_myresult = " "
-
-    # creation of a for loop to loop the query
-    # elimate so we the index of [0] allow printing of everythhing
-    for results in myresult:
-        # manipulation of tuples to get different results
-        # Quering database to give only last name and City by reference of their index:
-        print_myresult += str(results[1]) + "  " + str(results[3]) + "\n"
-
-    # creatiom of a query label
-
-    query_label = Label(root, text=print_myresult, font=12)
-    query_label.grid(row=8, column=0, columnspan=2)
-
-    # creation of a commit to changes we are making to a database.
-    connexion.commit()
-
-    # closing the  connection upon completing using the database.
-    connexion.close()
-
 
 def query_fun():
     # create a database or connect to existing one.
