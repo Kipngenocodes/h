@@ -95,7 +95,7 @@ def query_fun():
     # creatiom of a query label
 
     query_label = Label(root, text=print_myresult, font=12)
-    query_label.grid(row=12, column=0, columnspan=2)
+    query_label.grid(row=13, column=0, columnspan=2)
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
@@ -105,22 +105,96 @@ def query_fun():
 
 
 # create a delete function which will remove particular data from database
-def update_fun():
+def delete_fun():
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
 
     # creation of cursor which allows us to send command to database  to do something.
     mycursor = connexion.cursor()
 
-    # update records from the database
-    mycursor.execute("UPDATE adresses SET city ='Boise'")
+    # delete a record from the database
+    mycursor.execute("DELETE FROM adresses WHERE oid=" + delete.get())
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
 
     # closing the  connection upon completing using the database.
     connexion.close()
+    return
 
+# Creation of update window
+def edit_fun():
+    # creating tkinter window.
+    editor = Tk()
+    # assigning title to tkinter window.
+    editor.title("Update the Record")
+    # assigning dimension to tkinter window.
+    editor.geometry("500x500")
+
+    # creation of the entry widget to get data to database
+    f_name_editor = Entry(editor, width=40)
+    f_name_editor.grid(row=0, column=1, padx=20)
+
+    l_name_editor = Entry(editor, width=40)
+    l_name_editor.grid(row=1, column=1)
+
+    address_editor = Entry(editor, width=40)
+    address_editor.grid(row=2, column=1)
+
+    city_editor = Entry(editor, width=40)
+    city_editor.grid(row=3, column=1)
+
+    state_editor = Entry(editor, width=40)
+    state_editor.grid(row=4, column=1)
+
+    zip_code_editor = Entry(editor, width=40)
+    zip_code_editor.grid(row=5, column=1)
+
+
+
+
+    # Creating labels text boxes
+    f_name_label_editor = Label(editor, text="First Name:")
+    f_name_label_editor.grid(row=0, column=0 )
+
+    l_name_label_editor = Label(editor, text="Last Name:")
+    l_name_label_editor.grid(row=1, column=0)
+
+    address_label_editor = Label(editor, text="Address:")
+    address_label_editor.grid(row=2, column=0)
+
+    city_label_editor = Label(editor, text="City:")
+    city_label_editor.grid(row=3, column=0)
+
+    state_label_editor = Label(editor, text="State:")
+    state_label_editor.grid(row=4, column=0)
+
+    zip_code_label_editor = Label(editor, text="Zip Code:")
+    zip_code_label_editor.grid(row=5, column=0)
+    # create a submit update button
+    submit = Button(root, text="Add record into the database", command=submit_fun)
+    submit.grid(row=6, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
+
+
+
+
+
+
+
+
+    # create a database or connect to existing one.
+    connexion = mydatabsemanager.connect("MyadressBook.db")
+
+
+
+    # creation of cursor which allows us to send command to database  to do something.
+    mycursor = connexion.cursor()
+    # creation of a commit to changes we are making to a database.
+    connexion.commit()
+
+    # closing the  connection upon completing using the database.
+    connexion.close()
+    return
 
 # creation of the entry widget to get data to database
 f_name = Entry(root, width=40)
@@ -164,19 +238,23 @@ state_label.grid(row=4, column=0)
 zip_code_label = Label(root, text="Zip Code:")
 zip_code_label.grid(row=5, column=0)
 # create a delete label
-update_label = Label(root, text="Update:")
-update_label.grid(row=9, column=0)
+delete_label = Label(root, text="Select ID:")
+delete_label.grid(row=9, column=0)
 
 # create a submit button
 submit = Button(root, text="Add record into the database", command=submit_fun)
 submit.grid(row=6, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 
 # Create a delete Button
-update_button = Button(root, text="update Records", command=update_fun)
-update_button.grid(row=10, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
+delete_button = Button(root, text="Delete Records", command=delete_fun)
+delete_button.grid(row=10, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 # Creation of a query button
 query_button = Button(root, text="Show database", command=query_fun)
 query_button.grid(row=11, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
+
+# create an update button
+edit_button = Button(root, text="Edit database", command=edit_fun)
+edit_button.grid(row=12, column=0, columnspan=3, padx=10, pady=10, ipadx=140)
 
 # running tkinter mainloop
 root.mainloop()
