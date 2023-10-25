@@ -105,22 +105,21 @@ def query_fun():
 
 
 # create a delete function which will remove particular data from database
-def delete_fun():
+def update_fun():
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
 
     # creation of cursor which allows us to send command to database  to do something.
     mycursor = connexion.cursor()
 
-    # delete a record from the database
-    mycursor.execute("DELETE FROM adresses WHERE oid=" + delete.get())
+    # update records from the database
+    mycursor.execute("UPDATE adresses SET city ='Kapsabet'")
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
 
     # closing the  connection upon completing using the database.
     connexion.close()
-    return
 
 
 # creation of the entry widget to get data to database
@@ -165,16 +164,16 @@ state_label.grid(row=4, column=0)
 zip_code_label = Label(root, text="Zip Code:")
 zip_code_label.grid(row=5, column=0)
 # create a delete label
-delete_label = Label(root, text="Delete ID:")
-delete_label.grid(row=9, column=0)
+update_label = Label(root, text="Update:")
+update_label.grid(row=9, column=0)
 
 # create a submit button
 submit = Button(root, text="Add record into the database", command=submit_fun)
 submit.grid(row=6, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 
 # Create a delete Button
-delete_button = Button(root, text="Delete Records", command=delete_fun)
-delete_button.grid(row=10, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
+update_button = Button(root, text="update Records", command=update_fun)
+update_button.grid(row=10, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 # Creation of a query button
 query_button = Button(root, text="Show database", command=query_fun)
 query_button.grid(row=11, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
