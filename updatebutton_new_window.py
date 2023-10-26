@@ -129,7 +129,7 @@ def update_window_fun():
                          'state': state_editor.get(),
                          'zip_code': zip_code_editor.get(),
 
-                        'oid': record_id
+                         'oid': record_id
 
                      }
                      )
