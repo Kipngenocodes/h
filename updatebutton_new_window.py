@@ -140,7 +140,7 @@ def update_window_fun():
     # closing the  connection upon completing using the database.
     connexion.close()
 
-
+    edit_fun.destroy()
 def delete_fun():
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
@@ -149,7 +149,7 @@ def delete_fun():
     mycursor = connexion.cursor()
 
     # delete a record from the database
-    mycursor.execute("DELETE FROM adresses WHERE oid=" + submit.get())
+    mycursor.execute("DELETE FROM adresses WHERE oid=" + select.get())
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
@@ -161,6 +161,7 @@ def delete_fun():
 
 # Creation of update window
 def edit_fun():
+    global edit_fun
     # creating tkinter window.
     editor = Tk()
     # assigning title to tkinter window.
