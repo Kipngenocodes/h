@@ -106,7 +106,41 @@ def query_fun():
 
 # create a delete function which will remove particular data from database
 def update_window_fun():
-    return
+    # create a database or connect to existing one.
+    connexion = mydatabsemanager.connect("MyadressBook.db")
+
+    # creation of cursor which allows us to send command to database  to do something.
+    mycursor = connexion.cursor()
+    record_id = select.get()
+    mycursor.execute(""" UPDATE adresses SET
+     First_name=:first,
+    Second_name=:last,
+    adress=:address,
+    city=:city,
+    state=:state,
+    zip_code=:zip_code
+    
+    WHERE oid=:oid""",
+                     {
+                         'first': f_name_editor.get(),
+                         'last': l_name_editor.get(),
+                         'address': address_editor.get(),
+                         'city': city_editor.get(),
+                         'state': state_editor.get(),
+                         'zip_code': zip_code_editor.get(),
+
+                        'oid': record_id
+
+                     }
+                     )
+
+    # creation of a commit to changes we are making to a database.
+    connexion.commit()
+
+    # closing the  connection upon completing using the database.
+    connexion.close()
+
+
 def delete_fun():
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
@@ -124,6 +158,7 @@ def delete_fun():
     connexion.close()
     return
 
+
 # Creation of update window
 def edit_fun():
     # creating tkinter window.
@@ -135,6 +170,13 @@ def edit_fun():
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
 
+    # creation of variable to be used in the outside edit_fun
+    global f_name_editor
+    global l_name_editor
+    global address_editor
+    global city_editor
+    global state_editor
+    global zip_code_editor
     # creation of the entry widget to get data to database
     f_name_editor = Entry(editor, width=40)
     f_name_editor.grid(row=0, column=1, padx=20)
@@ -154,12 +196,9 @@ def edit_fun():
     zip_code_editor = Entry(editor, width=40)
     zip_code_editor.grid(row=5, column=1)
 
-
-
-
     # Creating labels text boxes
     f_name_label_editor = Label(editor, text="First Name:")
-    f_name_label_editor.grid(row=0, column=0 )
+    f_name_label_editor.grid(row=0, column=0)
 
     l_name_label_editor = Label(editor, text="Last Name:")
     l_name_label_editor.grid(row=1, column=0)
@@ -177,7 +216,7 @@ def edit_fun():
     zip_code_label_editor.grid(row=5, column=0)
     # create a submit update button
 
-    submit_changes_button = Button(editor, text="Save record")
+    submit_changes_button = Button(editor, text="Save record", command=update_window_fun)
     submit_changes_button.grid(row=6, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 
     # create a database or connect to existing one.
@@ -192,13 +231,12 @@ def edit_fun():
 
     # loop through the results
     for record in myresult:
-        f_name_editor.insert(0,record[0])
+        f_name_editor.insert(0, record[0])
         l_name_editor.insert(0, record[1])
         address_editor.insert(0, record[2])
         city_editor.insert(0, record[3])
         state_editor.insert(0, record[4])
         zip_code_editor.insert(0, record[5])
-
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
@@ -206,6 +244,7 @@ def edit_fun():
     # closing the  connection upon completing using the database.
     connexion.close()
     return
+
 
 # creation of the entry widget to get data to database
 f_name = Entry(root, width=40)
