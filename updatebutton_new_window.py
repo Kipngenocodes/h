@@ -105,6 +105,8 @@ def query_fun():
 
 
 # create a delete function which will remove particular data from database
+def update_window_fun():
+    return
 def delete_fun():
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
@@ -113,7 +115,7 @@ def delete_fun():
     mycursor = connexion.cursor()
 
     # delete a record from the database
-    mycursor.execute("DELETE FROM adresses WHERE oid=" + delete.get())
+    mycursor.execute("DELETE FROM adresses WHERE oid=" + submit.get())
 
     # creation of a commit to changes we are making to a database.
     connexion.commit()
@@ -130,6 +132,8 @@ def edit_fun():
     editor.title("Update the Record")
     # assigning dimension to tkinter window.
     editor.geometry("500x500")
+    # create a database or connect to existing one.
+    connexion = mydatabsemanager.connect("MyadressBook.db")
 
     # creation of the entry widget to get data to database
     f_name_editor = Entry(editor, width=40)
@@ -172,23 +176,30 @@ def edit_fun():
     zip_code_label_editor = Label(editor, text="Zip Code:")
     zip_code_label_editor.grid(row=5, column=0)
     # create a submit update button
-    submit = Button(root, text="Add record into the database", command=submit_fun)
-    submit.grid(row=6, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 
-
-
-
-
-
-
+    submit_changes_button = Button(editor, text="Save record")
+    submit_changes_button.grid(row=6, column=0, columnspan=3, padx=10, pady=10, ipadx=100)
 
     # create a database or connect to existing one.
     connexion = mydatabsemanager.connect("MyadressBook.db")
 
-
-
     # creation of cursor which allows us to send command to database  to do something.
     mycursor = connexion.cursor()
+    record_id = select.get()
+    mycursor.execute("SELECT * FROM adresses WHERE oid = " + record_id)
+    # allows fetching from the database
+    myresult = mycursor.fetchall()
+
+    # loop through the results
+    for record in myresult:
+        f_name_editor.insert(0,record[0])
+        l_name_editor.insert(0, record[1])
+        address_editor.insert(0, record[2])
+        city_editor.insert(0, record[3])
+        state_editor.insert(0, record[4])
+        zip_code_editor.insert(0, record[5])
+
+
     # creation of a commit to changes we are making to a database.
     connexion.commit()
 
@@ -215,9 +226,9 @@ state.grid(row=4, column=1)
 zip_code = Entry(root, width=20)
 zip_code.grid(row=5, column=1)
 
-# creation of the delete entry widget
-delete = Entry(root, width=10)
-delete.grid(row=9, column=1)
+# creation of the select entry widget
+select = Entry(root, width=10)
+select.grid(row=9, column=1)
 
 # Creating labels text boxes
 f_name_label = Label(root, text="First Name:")
@@ -238,8 +249,8 @@ state_label.grid(row=4, column=0)
 zip_code_label = Label(root, text="Zip Code:")
 zip_code_label.grid(row=5, column=0)
 # create a delete label
-delete_label = Label(root, text="Select ID:")
-delete_label.grid(row=9, column=0)
+select_label = Label(root, text="Select ID:")
+select_label.grid(row=9, column=0)
 
 # create a submit button
 submit = Button(root, text="Add record into the database", command=submit_fun)
